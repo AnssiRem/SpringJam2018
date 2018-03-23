@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    public float MovementSpeed;
-    public float RotationSpeed;
+    public GameObject Top;
+    public GameObject Bottom;
 
-    public float MaxProximity;
+    public float ChargeSpeed;
+    public float MaxAngle;
+    public float RotationSpeed;
 
     void Start()
     {
@@ -16,10 +18,53 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        var mov = Input.GetAxis("Vertical") * Time.deltaTime * MovementSpeed;
-        var rot = Input.GetAxis("Horizontal") * Time.deltaTime * RotationSpeed;
-
-        transform.Translate(0, mov, 0);
-        transform.Rotate(0, 0, rot);
+        PlayerInput();
     }
+
+    void PlayerInput()
+    {
+        //Aiming
+        var h = Input.GetAxis("Vertical") * Time.deltaTime * RotationSpeed;
+        var v = Input.GetAxis("Horizontal") * Time.deltaTime * RotationSpeed;
+
+        transform.Rotate(0, 0, h);
+        transform.Rotate(v, 0, 0);
+
+        Debug.Log("X: " + transform.rotation.eulerAngles.x);
+        Debug.Log("Z: " + transform.rotation.eulerAngles.z);
+
+        //Maximum angle
+        if (transform.rotation.eulerAngles.x > MaxAngle && transform.rotation.eulerAngles.x < (360 - MaxAngle))
+        {
+            if (transform.rotation.eulerAngles.x <= 180)
+            {
+                transform.rotation = Quaternion.Euler(MaxAngle, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+            }
+            if (transform.rotation.eulerAngles.x > 180)
+            {
+                transform.rotation = Quaternion.Euler((360 - MaxAngle), transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+            }
+        }
+        if (transform.rotation.eulerAngles.z > MaxAngle && transform.rotation.eulerAngles.z < (360 - MaxAngle))
+        {
+            if (transform.rotation.eulerAngles.z <= 180)
+            {
+                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, MaxAngle);
+            }
+            if (transform.rotation.eulerAngles.z > 180)
+            {
+                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, (360 - MaxAngle));
+            }
+        }
+
+
+
+
+        //Charging
+        if (Input.GetAxis("Jump") != 0)
+        {
+            Top.transform.Translate((Bottom.transform.position - Top.transform.position) * ChargeSpeed);
+        }
+    }
+    
 }
