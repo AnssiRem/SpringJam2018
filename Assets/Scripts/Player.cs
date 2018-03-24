@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
         //Charging
         if (Input.GetAxis("Jump") != 0)
         {
-            Top.transform.Translate((Bottom.transform.position - Top.transform.position) * ChargeSpeed);
+            Top.transform.Translate(((Bottom.transform.position + new Vector3(0,0,0.35f)) - Top.transform.position) * ChargeSpeed);
         }
     }
     
