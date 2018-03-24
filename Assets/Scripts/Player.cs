@@ -7,9 +7,12 @@ public class Player : MonoBehaviour
     public GameObject Top;
     public GameObject Bottom;
 
+    public bool secretMode;
+
     public float ChargeSpeed;
     public float MaxAngle;
     public float RotationSpeed;
+    public float SpringForce;
 
     void Start()
     {
@@ -21,6 +24,12 @@ public class Player : MonoBehaviour
         PlayerInput();
 
         ResetAiming();
+        
+        if (Input.GetKeyDown("t"))
+        {
+            secretMode = true;
+            SpringForce = 20;
+        }
     }
 
     void PlayerInput()
@@ -85,6 +94,14 @@ public class Player : MonoBehaviour
         {
             //New Vector on taikaluku joka korjaa kahvaosan modelin offsetin
             Top.transform.Translate(((Bottom.transform.position + new Vector3(0, 0, 0.35f)) - Top.transform.position) * ChargeSpeed);
+            if (!secretMode)
+            {
+                Top.GetComponent<SpringJoint>().spring = 0;
+            }
+        }
+        else
+        {
+            Top.GetComponent<SpringJoint>().spring = SpringForce;
         }
     }
     void ResetAiming()
