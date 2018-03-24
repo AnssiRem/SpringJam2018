@@ -12,8 +12,8 @@ public class Explosion : MonoBehaviour
 
     void Start()
     {
-        timeUntilDestroy = 0.24f;
-        growSpeed = 0.2f;
+        timeUntilDestroy = 0.5f;
+        growSpeed = 0.17f;
     }
 
     void FixedUpdate()
