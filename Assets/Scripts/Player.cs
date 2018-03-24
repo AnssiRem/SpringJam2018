@@ -19,6 +19,8 @@ public class Player : MonoBehaviour
     void Update()
     {
         PlayerInput();
+
+        ResetAiming();
     }
 
     void PlayerInput()
@@ -27,44 +29,71 @@ public class Player : MonoBehaviour
         var h = Input.GetAxis("Vertical") * Time.deltaTime * RotationSpeed;
         var v = Input.GetAxis("Horizontal") * Time.deltaTime * RotationSpeed;
 
-        transform.Rotate(0, 0, h);
-        transform.Rotate(v, 0, 0);
-
-        Debug.Log("X: " + transform.rotation.eulerAngles.x);
-        Debug.Log("Z: " + transform.rotation.eulerAngles.z);
+        Top.transform.Rotate(h, 0, 0);
+        Bottom.transform.Rotate(h, 0, 0);
+        Top.transform.Rotate(0, 0, -v);
+        Bottom.transform.Rotate(0, 0, -v);
 
         //Maximum angle
-        if (transform.rotation.eulerAngles.x > MaxAngle && transform.rotation.eulerAngles.x < (360 - MaxAngle))
+        if (Top.transform.rotation.eulerAngles.x > MaxAngle && Top.transform.rotation.eulerAngles.x < (360 - MaxAngle))
         {
-            if (transform.rotation.eulerAngles.x <= 180)
+            if (Top.transform.rotation.eulerAngles.x <= 180)
             {
-                transform.rotation = Quaternion.Euler(MaxAngle, transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
-            }
-            if (transform.rotation.eulerAngles.x > 180)
-            {
-                transform.rotation = Quaternion.Euler((360 - MaxAngle), transform.rotation.eulerAngles.y, transform.rotation.eulerAngles.z);
+                Top.transform.rotation = Quaternion.Euler(MaxAngle, Top.transform.rotation.eulerAngles.y, Top.transform.rotation.eulerAngles.z);
+            }         
+            if (Top.transform.rotation.eulerAngles.x > 180)
+            {         
+                Top.transform.rotation = Quaternion.Euler((360 - MaxAngle), Top.transform.rotation.eulerAngles.y, Top.transform.rotation.eulerAngles.z);
             }
         }
-        if (transform.rotation.eulerAngles.z > MaxAngle && transform.rotation.eulerAngles.z < (360 - MaxAngle))
+        if (Top.transform.rotation.eulerAngles.z > MaxAngle && Top.transform.rotation.eulerAngles.z < (360 - MaxAngle))
         {
-            if (transform.rotation.eulerAngles.z <= 180)
+            if (Top.transform.rotation.eulerAngles.z <= 180)
             {
-                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, MaxAngle);
+                Top.transform.rotation = Quaternion.Euler(Top.transform.rotation.eulerAngles.x, Top.transform.rotation.eulerAngles.y, MaxAngle);
             }
-            if (transform.rotation.eulerAngles.z > 180)
+            if (Top.transform.rotation.eulerAngles.z > 180)
             {
-                transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles.x, transform.rotation.eulerAngles.y, (360 - MaxAngle));
+                Top.transform.rotation = Quaternion.Euler(Top.transform.rotation.eulerAngles.x, Top.transform.rotation.eulerAngles.y, (360 - MaxAngle));
             }
         }
-
-
-
+        if (Bottom.transform.rotation.eulerAngles.x > MaxAngle && Bottom.transform.rotation.eulerAngles.x < (360 - MaxAngle))
+        {
+            if (Bottom.transform.rotation.eulerAngles.x <= 180)
+            {
+                Bottom.transform.rotation = Quaternion.Euler(MaxAngle, Bottom.transform.rotation.eulerAngles.y, Bottom.transform.rotation.eulerAngles.z);
+            }
+            if (Bottom.transform.rotation.eulerAngles.x > 180)
+            {
+                Bottom.transform.rotation = Quaternion.Euler((360 - MaxAngle), Bottom.transform.rotation.eulerAngles.y, Bottom.transform.rotation.eulerAngles.z);
+            }
+        }
+        if (Bottom.transform.rotation.eulerAngles.z > MaxAngle && Bottom.transform.rotation.eulerAngles.z < (360 - MaxAngle))
+        {
+            if (Bottom.transform.rotation.eulerAngles.z <= 180)
+            {
+                Bottom.transform.rotation = Quaternion.Euler(Bottom.transform.rotation.eulerAngles.x, Bottom.transform.rotation.eulerAngles.y, MaxAngle);
+            }
+            if (Bottom.transform.rotation.eulerAngles.z > 180)
+            {
+                Bottom.transform.rotation = Quaternion.Euler(Bottom.transform.rotation.eulerAngles.x, Bottom.transform.rotation.eulerAngles.y, (360 - MaxAngle));
+            }
+        }
 
         //Charging
         if (Input.GetAxis("Jump") != 0)
         {
-            Top.transform.Translate(((Bottom.transform.position + new Vector3(0,0,0.35f)) - Top.transform.position) * ChargeSpeed);
+            //New Vector on taikaluku joka korjaa kahvaosan modelin offsetin
+            Top.transform.Translate(((Bottom.transform.position + new Vector3(0, 0, 0.35f)) - Top.transform.position) * ChargeSpeed);
         }
     }
-    
+
+    void ResetAiming()
+    {
+        if(Mathf.Abs(Input.GetAxis("Horizontal")) + Mathf.Abs(Input.GetAxis("Vertical")) == 0)
+        {
+            Bottom.transform.rotation = Quaternion.Euler(0, 0, 0);
+            Top.transform.rotation = Quaternion.Euler(0, 0, 0);
+        }
+    }
 }
