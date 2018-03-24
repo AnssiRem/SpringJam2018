@@ -40,9 +40,9 @@ public class Player : MonoBehaviour
             if (Top.transform.rotation.eulerAngles.x <= 180)
             {
                 Top.transform.rotation = Quaternion.Euler(MaxAngle, Top.transform.rotation.eulerAngles.y, Top.transform.rotation.eulerAngles.z);
-            }         
+            }
             if (Top.transform.rotation.eulerAngles.x > 180)
-            {         
+            {
                 Top.transform.rotation = Quaternion.Euler((360 - MaxAngle), Top.transform.rotation.eulerAngles.y, Top.transform.rotation.eulerAngles.z);
             }
         }
@@ -87,10 +87,9 @@ public class Player : MonoBehaviour
             Top.transform.Translate(((Bottom.transform.position + new Vector3(0, 0, 0.35f)) - Top.transform.position) * ChargeSpeed);
         }
     }
-
     void ResetAiming()
     {
-        if(Mathf.Abs(Input.GetAxis("Horizontal")) + Mathf.Abs(Input.GetAxis("Vertical")) == 0)
+        if (Mathf.Abs(Input.GetAxis("Horizontal")) + Mathf.Abs(Input.GetAxis("Vertical")) == 0)
         {
             Bottom.transform.rotation = Quaternion.Euler(0, 0, 0);
             Top.transform.rotation = Quaternion.Euler(0, 0, 0);
