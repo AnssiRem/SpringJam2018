@@ -106,9 +106,12 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < amount; ++i)
         {
-            randomIndex = random.Next(list_t.Count);
-            GameObject.Find(list_t[randomIndex]).GetComponent<Cube>().Explode(BlockActionDelay);
-            list_t.RemoveAt(randomIndex);
+            if (list_t.Count != 0)
+            {
+                randomIndex = random.Next(list_t.Count);
+                GameObject.Find(list_t[randomIndex]).GetComponent<Cube>().Explode(BlockActionDelay);
+                list_t.RemoveAt(randomIndex);
+            }
         }
     }
     private void DropBlocks(int amount, int plane)
@@ -117,13 +120,13 @@ public class GameManager : MonoBehaviour
 
         for (int i = 0; i < amount; ++i)
         {
-            if (plane == 1)
+            if (plane == 1 && list_t.Count != 0)
             {
                 randomIndex = random.Next(list_t.Count);
                 GameObject.Find(list_t[randomIndex]).GetComponent<Cube>().Fall(BlockActionDelay, BlockFallSpeed);
                 list_t.RemoveAt(randomIndex);
             }
-            else if (plane == 2)
+            else if (plane == 2 && list_b.Count != 0)
             {
                 randomIndex = random.Next(list_b.Count);
                 GameObject.Find(list_b[randomIndex]).GetComponent<Cube>().Fall(BlockActionDelay, BlockFallSpeed);
@@ -131,7 +134,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                Debug.LogError("Plane out of range!");
+                Debug.LogError("Plane out of range or lists empty!");
             }
         }
     }
