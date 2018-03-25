@@ -6246,12 +6246,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 1474702538}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b88f573735a72ff4db6d31128f8defc5, type: 3}
+  m_Script: {fileID: 11500000, guid: 47e860920ebbb99458a0ef41f34c5255, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   GameOverText: {fileID: 1302990947}
-  RestartText: {fileID: 0}
   ScoreText: {fileID: 492336549}
+  YouScoredText: {fileID: 228525475}
   BlockActionDelay: 5
   BlockFallSpeed: 0.1
   BlockActionRate: 5

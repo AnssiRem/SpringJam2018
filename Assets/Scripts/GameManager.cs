@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public GameObject GameOverText;
-    public GameObject RestartText;
     public GameObject ScoreText;
+    public GameObject YouScoredText;
 
     public System.Random random = new System.Random();
 
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
             {
                 score += ScoreAmount;
                 timeUntilScore = ScoreRate;
-                //ScoreText.GetComponent<textComponent>().text = "Score: " + score;
+                ScoreText.GetComponent<Text>().text = "Score: " + score;
             }
         }
 
@@ -73,8 +74,9 @@ public class GameManager : MonoBehaviour
 
     public void GameOver()
     {
+        countScore = false;
         GameOverText.SetActive(true);
-        RestartText.SetActive(true);
+        YouScoredText.GetComponent<Text>().text = "You scored " + score + " points!";
     }
     private void CreateBlockList()
     {
