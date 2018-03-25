@@ -125,9 +125,9 @@ public class GameManager : MonoBehaviour
             }
             else if (plane == 2)
             {
-                randomIndex = random.Next(list_t.Count);
+                randomIndex = random.Next(list_b.Count);
                 GameObject.Find(list_b[randomIndex]).GetComponent<Cube>().Fall(BlockActionDelay, BlockFallSpeed);
-                list_t.RemoveAt(randomIndex);
+                list_b.RemoveAt(randomIndex);
             }
             else
             {
