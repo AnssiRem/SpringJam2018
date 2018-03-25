@@ -22,13 +22,16 @@ public class GameManager : MonoBehaviour
     private float timeUntilBlockAction;
     private float timeUntilScore;
 
-    public int BlockFallAmount;
+    public int BlockFallAmountTop;
+    public int BlockFallAmountBottom;
+    public int BlocksUntilBottomAwake;
     public int BlockExplodeAmount;
     public int ScoreAmount;
 
     private int score;
 
     private List<string> list_t;
+    private List<string> list_b;
 
     void Start()
     {
@@ -52,7 +55,7 @@ public class GameManager : MonoBehaviour
         //Score
         if (countScore)
         {
-            if(timeUntilScore < 0)
+            if (timeUntilScore < 0)
             {
                 score += ScoreAmount;
                 timeUntilScore = ScoreRate;
@@ -63,9 +66,14 @@ public class GameManager : MonoBehaviour
         //Block functionality
         if (timeUntilBlockAction < 0)
         {
-            DropBlocks(BlockFallAmount);
+            DropBlocks(BlockFallAmountTop, 1);
             ExplodeBlocks(BlockExplodeAmount);
             timeUntilBlockAction = BlockActionRate;
+
+            if (BlocksUntilBottomAwake >= list_t.Count)
+            {
+                DropBlocks(BlockFallAmountBottom, 2);
+            }
         }
 
         timeUntilBlockAction -= Time.deltaTime;
@@ -81,12 +89,14 @@ public class GameManager : MonoBehaviour
     private void CreateBlockList()
     {
         list_t = new List<string>();
+        list_b = new List<string>();
 
         for (int i = 1; i < 9; ++i)
         {
             for (int j = 1; j < 9; ++j)
             {
                 list_t.Add("Level/Top Plane/" + i + "/" + j);
+                list_b.Add("Level/Bottom Plane/" + i + "/" + j);
             }
         }
     }
@@ -101,15 +111,28 @@ public class GameManager : MonoBehaviour
             list_t.RemoveAt(randomIndex);
         }
     }
-    private void DropBlocks(int amount)
+    private void DropBlocks(int amount, int plane)
     {
         int randomIndex;
 
         for (int i = 0; i < amount; ++i)
         {
-            randomIndex = random.Next(list_t.Count);
-            GameObject.Find(list_t[randomIndex]).GetComponent<Cube>().Fall(BlockActionDelay, BlockFallSpeed);
-            list_t.RemoveAt(randomIndex);
+            if (plane == 1)
+            {
+                randomIndex = random.Next(list_t.Count);
+                GameObject.Find(list_t[randomIndex]).GetComponent<Cube>().Fall(BlockActionDelay, BlockFallSpeed);
+                list_t.RemoveAt(randomIndex);
+            }
+            else if (plane == 2)
+            {
+                randomIndex = random.Next(list_t.Count);
+                GameObject.Find(list_b[randomIndex]).GetComponent<Cube>().Fall(BlockActionDelay, BlockFallSpeed);
+                list_t.RemoveAt(randomIndex);
+            }
+            else
+            {
+                Debug.LogError("Plane out of range!");
+            }
         }
     }
 }
