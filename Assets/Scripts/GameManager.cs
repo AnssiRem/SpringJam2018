@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public GameObject GameOverText;
     public GameObject ScoreText;
     public GameObject YouScoredText;
+    public GameObject CreditsText;
 
     public System.Random random = new System.Random();
 
@@ -138,4 +139,22 @@ public class GameManager : MonoBehaviour
             }
         }
     }
+    public void QuitGame()
+    {
+        Debug.Log("Quitting game!");
+        Application.Quit();
+    }
+    public void CreditsOn()
+    {
+        
+        CreditsText.SetActive(true);
+       
+    }
+    public void CreditsOff()
+    {
+
+        CreditsText.SetActive(false);
+
+    }
+
 }

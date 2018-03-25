@@ -13,10 +13,13 @@ public class Player : MonoBehaviour
     public float MaxAngle;
     public float RotationSpeed;
     public float SpringForce;
-
+    public AudioSource DrillSound;
+    public ParticleSystem Sparks;
+    
     void Start()
     {
-
+        AudioSource DrillSound = GetComponent<AudioSource>();
+        ParticleSystem Sparks = GetComponent<ParticleSystem>();
     }
 
     void Update()
@@ -24,11 +27,21 @@ public class Player : MonoBehaviour
         PlayerInput();
 
         ResetAiming();
-        
+
         if (Input.GetKeyDown("t"))
         {
             secretMode = true;
-            SpringForce = 20;
+            SpringForce = 40;
+            DrillSound.Play();
+            Sparks.emissionRate = 50;
+
+        }
+        else if (Input.GetKeyUp("t"))
+        {
+            secretMode = false;
+            DrillSound.Stop();
+            SpringForce = 80;
+            Sparks.emissionRate = 0;
         }
     }
 

@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio 2015
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SpringJam2018", "SpringJam2018.csproj", "{E97CC7ED-7A9B-A496-2D2F-A9B3C269D01A}"
 EndProject
 Global

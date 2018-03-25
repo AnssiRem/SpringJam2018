@@ -85,7 +85,7 @@ public class Cube : MonoBehaviour
         timeFallDelay = delay;
         fallingSpeed = speed;
         timeUntilFall = timeFallDelay;
-        timeUntilDestroy = timeFallDelay + (fallingSpeed * 50);
+        timeUntilDestroy = timeFallDelay + (fallingSpeed * 100);
 
         mat.color = c_red;
 
